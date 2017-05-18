@@ -1,0 +1,37 @@
+body {
+    background-color: #e8e8e8;
+}
+
+h6 {
+    font-size: 1.5rem;
+}
+
+.container {
+    padding: 2rem 0;
+    width: 95%;
+}
+
+.side-nav .divider {
+    margin: 8px 0;
+}
+
+.card-action a {
+    color: #fff !important;
+}
+
+table {
+    font-size: 13px;
+}
+
+table td:first-of-type,
+table th:first-of-type {
+    padding-left: 24px;
+}
+
+.card table tr:last-child {
+    border-bottom: none;
+}
+
+.card-text {
+    width: calc(100% - 60px);
+}

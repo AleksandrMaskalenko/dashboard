@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html data-ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+
+
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css'>
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.2.1/socket.io.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.1.1/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-chart.js/0.10.2/angular-chart.min.js"></script>
+    <script src="js/controller.js"></script>
+
+
+</head>
+
+<body data-ng-controller="Controller">
+
+<div class="main">
+
+    <div class="navbar-fixed">
+        <nav class="nav-extended z-depth-0">
+            <div class="nav-wrapper teal darken-3">
+                <ul>
+                    <li><a href="#!"><i class="material-icons">menu</i></a></li>
+                    <li><a href="#!"><span>Dashboard</span></a></li>
+                </ul>
+                <ul class="right">
+                    <li><a href="#!"><i class="material-icons">apps</i></a></li>
+                    <li><a href="#!"><i class="material-icons">help</i></a></li>
+                </ul>
+            </div>
+            <div class="nav-content teal darken-3 hide">
+                <div class="container">
+                    <h6>Dashboard</h6>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col s12 m6 ">
+                <div class="card white">
+                    <div class="card-content">
+
+                        <div class="chart">
+                            <canvas id="pie" class="chart chart-pie" data-chart-data="dataPie"
+                                    data-chart-labels="labelsPie" data-chart-series="seriesPie"></canvas>
+                        </div>
+                        <div>
+                            <p>Result for the last hour</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col s12 m6">
+                <div class="card white">
+                    <div class="card-content">
+                        <div>
+                            <canvas id="bar" class="chart chart-bar" data-chart-data="dataBar"
+                                    data-chart-labels="labelsBar" data-chart-series="seriesBar"></canvas>
+                        </div>
+                        <div>
+                            <p>Result for all time</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="row" >
+            <div class="col s12 m12">
+                <div class="card">
+                    <table class="bordered highlight table-fixed">
+                        <thead>
+                        <tr>
+                            <th>time</th>
+                            <th>event</th>
+                            <th>requirement</th>
+                            <th>component</th>
+                            <th>title</th>
+                        </tr>
+                        </thead>
+
+                        <tbody class="nu-table-body">
+                        <tr data-ng-repeat="event in events">
+                            <td>{{event.time}}</td>
+                            <td>{{event.event}}</td>
+                            <td>{{event.testCase.requirement}}</td>
+                            <td>{{event.testCase.component}}</td>
+                            <td>{{event.testCase.title}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
