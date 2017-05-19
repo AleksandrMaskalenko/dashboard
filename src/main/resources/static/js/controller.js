@@ -2,8 +2,8 @@ angular.module('myApp', ["chart.js"])
 
 .controller('Controller', function ($scope, $http) {
 
-    $scope.labelsPie = ["started", "success", "error", "failure"];
-    $scope.seriesBar = ["started", "success", "error", "failure"];
+    $scope.eventLabels = ["started", "success", "error", "failure"];
+    $scope.requirementSeries = ["started", "success", "error", "failure"];
 
     var socket = io('http://testevents.neueda.lv:80', {
         path: '/live'
@@ -13,23 +13,22 @@ angular.module('myApp', ["chart.js"])
 
         $http.post('http://localhost:8080/event/add', data);
 
-
         $http.get('http://localhost:8080/events').then(function (response) {
             $scope.events = response.data;
         });
 
-        $http.get('http://localhost:8080/chartPie').then(function (response) {
-            $scope.dataPie = response.data;
+        $http.get('http://localhost:8080/eventData').then(function (response) {
+            $scope.eventData = response.data;
             $scope.totalEventCount = getTotalPie();
 
         });
 
-        $http.get('http://localhost:8080/requirement').then(function (response) {
-            $scope.labelsBar = response.data;
+        $http.get('http://localhost:8080/requirementLabel').then(function (response) {
+            $scope.requirementLabel = response.data;
         });
 
-        $http.get('http://localhost:8080/bar').then(function (response) {
-            $scope.dataBar = response.data;
+        $http.get('http://localhost:8080/requirementData').then(function (response) {
+            $scope.requirementData = response.data;
         });
 
         $http.get('http://localhost:8080/componentLabel').then(function (response) {
@@ -37,7 +36,7 @@ angular.module('myApp', ["chart.js"])
         });
 
         $http.get('http://localhost:8080/componentData').then(function (response) {
-            $scope.dataComponent = response.data;
+            $scope.componentData = response.data;
             $scope.totalComponentCount = getTotalComponent();
         });
 
@@ -46,7 +45,7 @@ angular.module('myApp', ["chart.js"])
 
     var getTotalComponent = function(){
         var total = 0;
-        var arr = $scope.dataComponent[0];
+        var arr = $scope.componentData[0];
         for(var i = 0; i < arr.length; i++){
             total += arr[i];
         }
@@ -55,12 +54,10 @@ angular.module('myApp', ["chart.js"])
 
     var getTotalPie = function(){
         var total = 0;
-        for(var i = 0; i < $scope.dataPie.length; i++){
-            total += $scope.dataPie[i]
+        for(var i = 0; i < $scope.eventData.length; i++){
+            total += $scope.eventData[i]
         }
         return total;
     };
-
-
 
 });

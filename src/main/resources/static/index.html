@@ -5,12 +5,12 @@
     <title>Dashboard</title>
 
 
-    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css'>
-    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="css/style.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.2.1/socket.io.min.js"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.1.1/Chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-chart.js/0.10.2/angular-chart.min.js"></script>
@@ -49,15 +49,15 @@
 
             <div class="col s12 m6 ">
                 <div class="card white">
-                    <div class="card-content">
+                    <div class="card-content pie">
 
-                        <div>
+                        <div class="title">
                             <h5>Event result for the last hour</h5>
                         </div>
 
                         <div>
-                            <canvas id="eventPie" class="chart chart-pie" data-chart-data="dataPie"
-                                    data-chart-labels="labelsPie"></canvas>
+                            <canvas height="120" id="eventPie" class="chart chart-pie" data-chart-data="eventData"
+                                    data-chart-labels="eventLabels"></canvas>
                         </div>
                         <div>
                             <p>Total(1 hour limit) event count: {{totalEventCount}} psc.</p>
@@ -88,19 +88,20 @@
 
             <div class="col s12 m6">
                 <div class="card white">
-                    <div class="card-content">
+                    <div class="card-content pie">
 
-                        <div>
+                        <div class="title">
                             <h5>Component result for all time</h5>
                         </div>
 
                         <div>
-                            <canvas id="componentBar" class="chart chart-bar" data-chart-data="dataComponent"
+                            <canvas height="120" id="componentBar" class="chart chart-bar" data-chart-data="componentData"
                                     data-chart-labels="componentLabel" ></canvas>
                         </div>
                         <div>
                             <p>Total event count: {{totalComponentCount}} psc.</p>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -108,15 +109,15 @@
         </div>
 
         <div class="card white">
-            <div class="card-content">
+            <div class="card-content bar">
 
-                <div>
+                <div class="title">
                     <h5>Requirement result for all time</h5>
                 </div>
 
                 <div>
-                    <canvas id="requirementBar" class="chart chart-bar" data-chart-data="dataBar"
-                            data-chart-labels="labelsBar" data-chart-series="seriesBar" ></canvas>
+                    <canvas height="100" id="requirementBar" class="chart chart-bar" data-chart-data="requirementData"
+                            data-chart-labels="requirementLabel" data-chart-series="requirementSeries" ></canvas>
                 </div>
 
                 <div>
@@ -154,7 +155,7 @@
 
                         <tbody class="nu-table-body">
                         <tr data-ng-repeat="event in events">
-                            <td>{{event.time}}</td>
+                            <td>{{event.dateTime | date: "dd.MM.y h:mm:ss"}}</td>
                             <td>{{event.event}}</td>
                             <td>{{event.testCase.requirement}}</td>
                             <td>{{event.testCase.component}}</td>

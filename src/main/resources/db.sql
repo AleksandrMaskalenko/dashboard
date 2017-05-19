@@ -15,10 +15,11 @@ CREATE TABLE test_case (
   ENGINE = InnoDB;
 
 CREATE TABLE event (
-  uuid VARCHAR(255)     NOT NULL PRIMARY KEY,
-  time VARCHAR(255)     NOT NULL,
-  event VARCHAR(255)    NOT NULL,
+  uuid VARCHAR(255)             NOT NULL PRIMARY KEY,
+  time VARCHAR(255)             NOT NULL,
+  event VARCHAR(255)            NOT NULL,
   test_case VARCHAR(255)        NOT NULL,
+  dateTime DATETIME,
 
   FOREIGN KEY (test_case) REFERENCES test_case(uuid)
 )

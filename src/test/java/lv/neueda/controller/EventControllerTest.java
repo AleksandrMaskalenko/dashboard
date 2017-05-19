@@ -41,7 +41,7 @@ public class EventControllerTest {
 
     @Test
     public void getAllSong() throws Exception {
-        when(eventService.eventList()).thenReturn(eventList);
+        when(eventService.getAllEvent()).thenReturn(eventList);
 
         List<Event> allEvent = eventController.getAllEvent();
 

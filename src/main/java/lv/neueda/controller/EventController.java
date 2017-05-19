@@ -4,7 +4,6 @@ import lv.neueda.model.Event;
 import lv.neueda.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Set;
 
@@ -22,27 +21,22 @@ public class EventController {
 
     @RequestMapping(value = "/events")
     public List<Event> getAllEvent() {
-        return eventService.eventList();
+        return eventService.getAllEvent();
     }
 
-    @RequestMapping(value = "/event/{uuid}")
-    public Event getEventById(@PathVariable String uuid) {
-        return eventService.getEvent(uuid);
+    @RequestMapping(value = "/eventData")
+    public List<Integer> getEventData() {
+        return eventService.getEventData();
     }
 
-    @RequestMapping(value = "/chartPie")
-    public List<Integer> getEventChartPie() {
-        return eventService.eventListForPie();
+    @RequestMapping(value = "/requirementData")
+    public List<List<Integer>> getRequirementData() {
+        return eventService.getRequirementData();
     }
 
-    @RequestMapping(value = "/bar")
-    public List<List<Integer>> getEventBar() {
-        return eventService.findAllRequirement();
-    }
-
-    @RequestMapping(value = "/requirement")
-    public Set<String> getRequirement() {
-        return eventService.findRequirement();
+    @RequestMapping(value = "/requirementLabel")
+    public Set<String> getRequirementLabel() {
+        return eventService.getRequirementLabel();
     }
 
     @RequestMapping(value = "/componentLabel")

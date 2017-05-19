@@ -74,3 +74,16 @@ table th:first-of-type {
     height:32px;
     display:block;
 }
+
+.bar {
+    height: 550px;
+}
+
+.pie {
+    height: 400px;
+}
+
+.title {
+    width: 100%;
+    text-align: center;
+}

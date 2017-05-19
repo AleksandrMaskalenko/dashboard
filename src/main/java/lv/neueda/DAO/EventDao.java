@@ -12,9 +12,6 @@ import java.util.List;
 @Repository
 public interface EventDao extends JpaRepository<Event, String> {
 
-    @Query("SELECT e FROM Event e WHERE e.event LIKE :type")
-    List<Event> findEventByType(@Param("type") String type);
-
     @Query("SELECT e FROM Event e WHERE e.testCase.requirement LIKE :requirement")
     List<Event> findEventByRequirement(@Param("requirement") String requirement);
 

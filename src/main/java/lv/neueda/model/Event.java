@@ -1,6 +1,7 @@
 package lv.neueda.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Event {
@@ -9,6 +10,7 @@ public class Event {
     private String uuid;
     private String time;
     private String event;
+    private Date dateTime;
 
     @ManyToOne
     @JoinColumn(name = "test_case")
@@ -54,5 +56,13 @@ public class Event {
 
     public void setTestCase(TestCase testCase) {
         this.testCase = testCase;
+    }
+
+    public Date getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(Date dateTime) {
+        this.dateTime = dateTime;
     }
 }

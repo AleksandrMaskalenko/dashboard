@@ -6,15 +6,12 @@ import lv.neueda.model.Event;
 import lv.neueda.model.TestCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
 public class EventService {
-
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
     @Autowired
     private EventDao eventDao;
@@ -23,68 +20,55 @@ public class EventService {
     private TestCaseDao testCaseDao;
 
     public void addEvent(Event event) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
         testCaseDao.save(event.getTestCase());
+
+        Date formattedDate = null;
+        try {
+            formattedDate = format.parse(event.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        event.setDateTime(formattedDate);
         eventDao.save(event);
     }
 
-    public Event getEvent(String uuid) {
-        return eventDao.findOne(uuid);
-    }
-
-    public List<Event> eventList() {
+    public List<Event> getAllEvent() {
 
         List<Event> eventList = eventDao.findAll();
 
-        eventList.sort((Event o1, Event o2) -> {
-            Date formattedDate2 = null;
-            Date formattedDate1 = null;
-
-            try {
-                formattedDate2 = format.parse(o2.getTime());
-                formattedDate1 = format.parse(o1.getTime());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            return formattedDate2.compareTo(formattedDate1);
-
-        });
+        eventList.sort((o1, o2) -> o2.getDateTime().compareTo(o1.getDateTime()));
 
         return eventList;
     }
 
-    public List<Integer> eventListForPie() {
+    public List<Integer> getEventData() {
         Date currentDate = new Date();
 
         List<Integer> eventList = new ArrayList<>();
 
         String[] array = {"started", "success", "error", "failure"};
-        try {
+
+        List<Event> eventList1 = eventDao.findAll();
 
             for (String anArray : array) {
 
-                List<Event> eventByType = eventDao.findEventByType(anArray);
-                List<Event> newEventByType = new ArrayList<>();
+                int count = (int) eventList1
+                        .stream()
+                        .filter((e) -> e.getEvent().equals(anArray))
+                        .filter((e) -> (currentDate.getTime() - e.getDateTime().getTime()) > 3600000)
+                        .count();
 
-                for (Event event : eventByType) {
-
-                    Date formattedDate = format.parse(event.getTime());
-
-                    if (currentDate.getTime() - formattedDate.getTime() > 3600000) {
-                        newEventByType.add(event);
-                    }
-                }
-                eventList.add(newEventByType.size());
+                eventList.add(count);
             }
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
 
         return eventList;
     }
 
 
-    public Set<String> findRequirement() {
+    public Set<String> getRequirementLabel() {
         List<TestCase> testCaseList = testCaseDao.findAll();
         Set<String> requirement = new HashSet<>();
 
@@ -95,8 +79,8 @@ public class EventService {
         return requirement;
     }
 
-    public List<List<Integer>> findAllRequirement() {
-        Set<String> req = findRequirement();
+    public List<List<Integer>> getRequirementData() {
+        Set<String> req = getRequirementLabel();
 
         List<List<Integer>> listList = new ArrayList<>();
 
