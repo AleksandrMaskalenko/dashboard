@@ -45,5 +45,15 @@ public class EventController {
         return eventService.findRequirement();
     }
 
+    @RequestMapping(value = "/componentLabel")
+    public Set<String> getComponentLabel() {
+        return eventService.getComponentLabel();
+    }
+
+    @RequestMapping(value = "/componentData")
+    public List<List<Integer>> getComponentData() {
+        return eventService.getComponentData();
+    }
+
 
 }

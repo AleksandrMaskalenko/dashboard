@@ -14,6 +14,8 @@ import java.util.*;
 @Service
 public class EventService {
 
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
     @Autowired
     private EventDao eventDao;
 
@@ -30,11 +32,27 @@ public class EventService {
     }
 
     public List<Event> eventList() {
-        return eventDao.findAll();
+
+        List<Event> eventList = eventDao.findAll();
+
+        eventList.sort((Event o1, Event o2) -> {
+            Date formattedDate2 = null;
+            Date formattedDate1 = null;
+
+            try {
+                formattedDate2 = format.parse(o2.getTime());
+                formattedDate1 = format.parse(o1.getTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return formattedDate2.compareTo(formattedDate1);
+
+        });
+
+        return eventList;
     }
 
     public List<Integer> eventListForPie() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         Date currentDate = new Date();
 
         List<Integer> eventList = new ArrayList<>();
@@ -124,4 +142,33 @@ public class EventService {
         return listList;
 
     }
+
+    public Set<String> getComponentLabel() {
+        List<TestCase> testCaseList = testCaseDao.findAll();
+
+        Set<String> component = new HashSet<>();
+
+        for (TestCase testCase:testCaseList) {
+            component.add(testCase.getComponent());
+        }
+
+        return component;
+    }
+
+    public List<List<Integer>> getComponentData() {
+        Set<String> comp = getComponentLabel();
+
+        List<List<Integer>> list = new ArrayList<>();
+        List<Integer> componentList = new ArrayList<>();
+
+        for (String st: comp) {
+            List<Event> cases = eventDao.findEventByComponent(st);
+            componentList.add(cases.size());
+        }
+        list.add(componentList);
+
+        return list;
+
+    }
+
 }

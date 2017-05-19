@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/style.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.2.1/socket.io.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.1.1/Chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-chart.js/0.10.2/angular-chart.min.js"></script>
@@ -50,12 +51,34 @@
                 <div class="card white">
                     <div class="card-content">
 
-                        <div class="chart">
-                            <canvas id="pie" class="chart chart-pie" data-chart-data="dataPie"
-                                    data-chart-labels="labelsPie" data-chart-series="seriesPie"></canvas>
+                        <div>
+                            <h5>Event result for the last hour</h5>
+                        </div>
+
+                        <div>
+                            <canvas id="eventPie" class="chart chart-pie" data-chart-data="dataPie"
+                                    data-chart-labels="labelsPie"></canvas>
                         </div>
                         <div>
-                            <p>Result for the last hour</p>
+                            <p>Total(1 hour limit) event count: {{totalEventCount}} psc.</p>
+                        </div>
+
+                        <div>
+                            <ul class="color_picker">
+                                <li class="color_item">started: </li>
+                                <li class="color_item" style="background:#99bbcd"><div class="color-preview"  style="background:#99bbcd"></div></li>
+
+                                <li class="color_item">success:</li>
+                                <li class="color_item" style="background:#dcdcdc"><div class="color-preview"  style="background:#dcdcdc"></div></li>
+
+
+                                <li class="color_item">error:</li>
+                                <li class="color_item" style="background:#f7464a"><div class="color-preview"  style="background:#f7464a"></div></li>
+
+                                <li class="color_item">failure:</li>
+                                <li class="color_item" style="background:#46bfbd"><div class="color-preview"  style="background:#46bfbd"></div></li>
+
+                            </ul>
                         </div>
 
                     </div>
@@ -66,12 +89,17 @@
             <div class="col s12 m6">
                 <div class="card white">
                     <div class="card-content">
+
                         <div>
-                            <canvas id="bar" class="chart chart-bar" data-chart-data="dataBar"
-                                    data-chart-labels="labelsBar" data-chart-series="seriesBar"></canvas>
+                            <h5>Component result for all time</h5>
+                        </div>
+
+                        <div>
+                            <canvas id="componentBar" class="chart chart-bar" data-chart-data="dataComponent"
+                                    data-chart-labels="componentLabel" ></canvas>
                         </div>
                         <div>
-                            <p>Result for all time</p>
+                            <p>Total event count: {{totalComponentCount}} psc.</p>
                         </div>
                     </div>
                 </div>
@@ -79,9 +107,39 @@
 
         </div>
 
+        <div class="card white">
+            <div class="card-content">
+
+                <div>
+                    <h5>Requirement result for all time</h5>
+                </div>
+
+                <div>
+                    <canvas id="requirementBar" class="chart chart-bar" data-chart-data="dataBar"
+                            data-chart-labels="labelsBar" data-chart-series="seriesBar" ></canvas>
+                </div>
+
+                <div>
+                    <ul class="color_picker">
+                        <li class="color_item">started: </li>
+                        <li class="color_item" style="background:#99bbcd"><div class="color-preview"  style="background:#99bbcd"></div></li>
+
+                        <li class="color_item">success:</li>
+                        <li class="color_item" style="background:#dcdcdc"><div class="color-preview"  style="background:#dcdcdc"></div></li>
+
+
+                        <li class="color_item">error:</li>
+                        <li class="color_item" style="background:#f7464a"><div class="color-preview"  style="background:#f7464a"></div></li>
+
+                        <li class="color_item">failure:</li>
+                        <li class="color_item" style="background:#46bfbd"><div class="color-preview"  style="background:#46bfbd"></div></li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
 
         <div class="row" >
-            <div class="col s12 m12">
                 <div class="card">
                     <table class="bordered highlight table-fixed">
                         <thead>
@@ -105,7 +163,6 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
         </div>
     </div>
 </div>
